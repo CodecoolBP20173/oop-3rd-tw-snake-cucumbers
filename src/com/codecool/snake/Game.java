@@ -1,10 +1,15 @@
 package com.codecool.snake;
 
+import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerup;
 import com.codecool.snake.entities.snakes.SnakeHead;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Game extends Pane {
 
@@ -23,7 +28,14 @@ public class Game extends Pane {
         
     }
 
+    public void deleteIfRestart() {
+        for (GameEntity entity : Globals.getGameObjects()){
+            entity.destroy();
+        }
+    }
+
     public void start() {
+
         Scene scene = getScene();
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -38,7 +50,10 @@ public class Game extends Pane {
                 case RIGHT: Globals.rightKeyDown  = false; break;
             }
         });
+
         Globals.gameLoop = new GameLoop();
         Globals.gameLoop.start();
     }
+
+
 }
