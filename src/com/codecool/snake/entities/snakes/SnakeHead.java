@@ -1,5 +1,7 @@
 package com.codecool.snake.entities.snakes;
 
+import com.codecool.snake.Game;
+import com.codecool.snake.GameOver;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.Globals;
 import com.codecool.snake.entities.Animatable;
@@ -19,7 +21,7 @@ public class SnakeHead extends GameEntity implements Animatable {
         super(pane);
         setX(xc);
         setY(yc);
-        health = 100;
+        health = 20;
         tail = this;
         setImage(Globals.snakeHead);
         pane.getChildren().add(this);
@@ -55,7 +57,7 @@ public class SnakeHead extends GameEntity implements Animatable {
         // check for game over condition
         if (isOutOfBounds() || health <= 0) {
             System.out.println("Game Over");
-            Globals.gameLoop.stop();
+            GameOver.GameOver();
         }
     }
 
@@ -65,6 +67,20 @@ public class SnakeHead extends GameEntity implements Animatable {
             tail = newPart;
         }
     }
+
+   /* public boolean bodyTouch(){
+        for (GameEntity entity : Globals.snakeBody) {
+            if (getBoundsInParent().intersects(entity.getBoundsInParent())) {
+                if (entity instanceof Interactable) {
+                    Interactable interactable = (Interactable) entity;
+                    interactable.apply(this);
+                    System.out.println(interactable.getMessage());
+                    return true;
+                }
+            }
+        }
+        return false;
+    }*/
 
     public void changeHealth(int diff) {
         health += diff;
