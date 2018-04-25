@@ -23,6 +23,7 @@ public class SnakeHead extends GameEntity implements Animatable {
         setY(yc);
         health = 20;
         tail = this;
+
         setImage(Globals.snakeHead);
         pane.getChildren().add(this);
 
@@ -51,6 +52,14 @@ public class SnakeHead extends GameEntity implements Animatable {
                     interactable.apply(this);
                     System.out.println(interactable.getMessage());
                 }
+               /* else if(!(entity instanceof Interactable)){
+                    GameOver.GameOver();
+                }*/
+               /* else if(entity instanceof SnakeBody) {
+                    if(((SnakeBody) entity).id > 5){
+                        GameOver.GameOver();
+                    }
+                }*/
             }
         }
 
@@ -65,22 +74,9 @@ public class SnakeHead extends GameEntity implements Animatable {
         for (int i = 0; i < numParts; i++) {
             SnakeBody newPart = new SnakeBody(pane, tail);
             tail = newPart;
+            //SnakeBody.id++;
         }
     }
-
-   /* public boolean bodyTouch(){
-        for (GameEntity entity : Globals.snakeBody) {
-            if (getBoundsInParent().intersects(entity.getBoundsInParent())) {
-                if (entity instanceof Interactable) {
-                    Interactable interactable = (Interactable) entity;
-                    interactable.apply(this);
-                    System.out.println(interactable.getMessage());
-                    return true;
-                }
-            }
-        }
-        return false;
-    }*/
 
     public void changeHealth(int diff) {
         health += diff;
