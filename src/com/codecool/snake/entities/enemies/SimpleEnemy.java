@@ -44,7 +44,13 @@ public class SimpleEnemy extends GameEntity implements Animatable, Interactable 
     @Override
     public void step() {
         if (isOutOfBounds()) {
-            destroy();
+            setX(getX() - heading.getX());
+            setY(getY() - heading.getY());
+
+            Random rnd = new Random();
+            double direction = rnd.nextDouble() * 360;
+            setRotate(direction);
+            heading = Utils.directionToVector(direction, speed);
         }
         isNotSpawning = true;
         setX(getX() + heading.getX());
