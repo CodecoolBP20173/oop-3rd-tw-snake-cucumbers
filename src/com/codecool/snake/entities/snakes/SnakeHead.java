@@ -29,7 +29,6 @@ public class SnakeHead extends GameEntity implements Animatable {
         healthText.setVisible(true);
         healthText.setText("Health: "+ Integer.toString(health*2) + '%');
         healthText.setFill(Color.BLACK);
-        //healthText.setManaged(true);
 
         setImage(Globals.snakeHead);
         pane.getChildren().add(this);
@@ -58,27 +57,12 @@ public class SnakeHead extends GameEntity implements Animatable {
                 if (entity instanceof Interactable) {
                     Interactable interactable = (Interactable) entity;
                     interactable.apply(this);
-                    System.out.println(interactable.getMessage());
                 }
-                /*else if(!(entity instanceof Interactable)){
-                    if (score == 0) {
-                        break;
-                    }
-                    else {
-                     GameOver.GameOver();
-                    }
-                }*/
-               /* else if(entity instanceof SnakeBody) {
-                    if(((SnakeBody) entity).id > 5){
-                        GameOver.GameOver();
-                    }
-                }*/
             }
         }
 
         // check for game over condition
         if (isOutOfBounds() || health <= 0) {
-            System.out.println("Game Over");
             GameOver.GameOver();
         }
     }
@@ -88,7 +72,6 @@ public class SnakeHead extends GameEntity implements Animatable {
             SnakeBody newPart = new SnakeBody(pane, tail);
             tail = newPart;
             score += 1;
-            //SnakeBody.id++;
         }
     }
 

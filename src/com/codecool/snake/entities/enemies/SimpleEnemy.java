@@ -11,62 +11,54 @@ import javafx.scene.layout.Pane;
 
 import java.util.Random;
 
-// a simple enemy TODO make better ones.
 public class SimpleEnemy extends GameEntity implements Animatable, Interactable {
 
     private Point2D heading;
     private static final int DAMAGE = 10;
     private int speed = 1;
-    private boolean isNotSpawning;
+    private boolean isSpawning;
 
 
     public SimpleEnemy(Pane pane) {
         super(pane);
-
         setImage(Globals.simpleEnemy);
         pane.getChildren().add(this);
-        randomPositionAndDirection();
+        isSpawning = true;
+        randomPositionAndDirection(getRandom().nextDouble() * Globals.WINDOW_WIDTH,
+                getRandom().nextDouble() * Globals.WINDOW_HEIGHT);
     }
 
-    private void randomPositionAndDirection() {
-        isNotSpawning = false;
-        if (!isNotSpawning) {
-            Random rnd = new Random();
-            setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
-            setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
+    private void randomPositionAndDirection(double positionX, double positionY) {
+        setX(positionX);
+        setY(positionY);
 
-            double direction = rnd.nextDouble() * 360;
-            setRotate(direction);
-            heading = Utils.directionToVector(direction, speed);
-        }
+        double direction = getRandom().nextDouble() * 360;
+        setRotate(direction);
+        heading = Utils.directionToVector(direction, speed);
         }
 
     @Override
     public void step() {
+        isSpawning = false;
         if (isOutOfBounds()) {
-            setX(getX() - heading.getX());
-            setY(getY() - heading.getY());
-
-            Random rnd = new Random();
-            double direction = rnd.nextDouble() * 360;
-            setRotate(direction);
-            heading = Utils.directionToVector(direction, speed);
+            randomPositionAndDirection(getX() - heading.getX(),
+                    getY() - heading.getY());
         }
-        isNotSpawning = true;
         setX(getX() + heading.getX());
         setY(getY() + heading.getY());
     }
 
     @Override
     public void apply(SnakeHead player) {
-        if (isNotSpawning) {
+        if (!isSpawning) {
             player.changeHealth(-DAMAGE);
         }
-        randomPositionAndDirection();
+        randomPositionAndDirection(getRandom().nextDouble() * Globals.WINDOW_WIDTH,
+                getRandom().nextDouble() * Globals.WINDOW_HEIGHT);
     }
 
-    @Override
-    public String getMessage() {
-        return "10 DAMAGE";
+    private Random getRandom() {
+        return new Random();
     }
+
 }
