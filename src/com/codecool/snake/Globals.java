@@ -19,6 +19,7 @@ public class Globals {
     public static Image simpleEnemy = new Image("simple_enemy.png");
     public static Image powerupBerry = new Image("powerup_berry.png");
     //.. put here the other images you want to use
+    public static Game game = new Game();
 
     public static boolean leftKeyDown;
     public static boolean rightKeyDown;
@@ -44,4 +45,7 @@ public class Globals {
     public static List<GameEntity> getGameObjects() {
         return Collections.unmodifiableList(gameObjects);
     }
+
+
+
 }

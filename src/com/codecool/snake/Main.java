@@ -25,17 +25,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(game, Globals.WINDOW_WIDTH, Globals.WINDOW_HEIGHT));
         primaryStage.show();
 
-        Button restartButton = new Button("Restart");
-        restartButton.setMinSize(30, 10);
-        restartButton.setVisible(true);
-        restartButton.setOnAction(actionEvent ->  {
-            game.deleteIfRestart();
-            //start(primaryStage);
-            //Game game2 = new Game();
-        });
-        game.getChildren().addAll(restartButton);
-
-
         game.start();
     }
 }
