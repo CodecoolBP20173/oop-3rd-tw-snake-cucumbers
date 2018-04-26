@@ -15,40 +15,52 @@ import java.util.Random;
 public class SimpleEnemy extends GameEntity implements Animatable, Interactable {
 
     private Point2D heading;
-    private static final int damage = 10;
+    private static final int DAMAGE = 10;
+    private int speed = 1;
+    private boolean isNotSpawning;
+
 
     public SimpleEnemy(Pane pane) {
         super(pane);
 
         setImage(Globals.simpleEnemy);
         pane.getChildren().add(this);
-        int speed = 1;
-        Random rnd = new Random();
-        setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
-        setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
-
-        double direction = rnd.nextDouble() * 360;
-        setRotate(direction);
-        heading = Utils.directionToVector(direction, speed);
+        randomPositionAndDirection();
     }
+
+    private void randomPositionAndDirection() {
+        isNotSpawning = false;
+        if (!isNotSpawning) {
+            Random rnd = new Random();
+            setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
+            setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
+
+            double direction = rnd.nextDouble() * 360;
+            setRotate(direction);
+            heading = Utils.directionToVector(direction, speed);
+        }
+        }
 
     @Override
     public void step() {
         if (isOutOfBounds()) {
             destroy();
         }
+        isNotSpawning = true;
         setX(getX() + heading.getX());
         setY(getY() + heading.getY());
     }
 
     @Override
     public void apply(SnakeHead player) {
-        player.changeHealth(-damage);
-        destroy();
+        if (isNotSpawning) {
+            player.changeHealth(-DAMAGE);
+        }
+        randomPositionAndDirection();
     }
 
     @Override
     public String getMessage() {
-        return "10 damage";
+        return "10 DAMAGE";
     }
 }
