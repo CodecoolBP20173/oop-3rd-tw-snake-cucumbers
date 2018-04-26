@@ -16,6 +16,7 @@ public class SnakeHead extends GameEntity implements Animatable {
     private static final float turnRate = 2;
     private GameEntity tail; // the last element. Needed to know where to add the next part.
     private int health;
+    public static int score = 0;
 
     public SnakeHead(Pane pane, int xc, int yc) {
         super(pane);
@@ -52,8 +53,13 @@ public class SnakeHead extends GameEntity implements Animatable {
                     interactable.apply(this);
                     System.out.println(interactable.getMessage());
                 }
-               /* else if(!(entity instanceof Interactable)){
-                    GameOver.GameOver();
+                /*else if(!(entity instanceof Interactable)){
+                    if (score == 0) {
+                        break;
+                    }
+                    else {
+                     GameOver.GameOver();
+                    }
                 }*/
                /* else if(entity instanceof SnakeBody) {
                     if(((SnakeBody) entity).id > 5){
@@ -74,6 +80,7 @@ public class SnakeHead extends GameEntity implements Animatable {
         for (int i = 0; i < numParts; i++) {
             SnakeBody newPart = new SnakeBody(pane, tail);
             tail = newPart;
+            score += 1;
             //SnakeBody.id++;
         }
     }
