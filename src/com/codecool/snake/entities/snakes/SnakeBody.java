@@ -1,5 +1,6 @@
 package com.codecool.snake.entities.snakes;
 
+import com.codecool.snake.GameOver;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.Globals;
 import com.codecool.snake.entities.Animatable;
@@ -16,6 +17,7 @@ public class SnakeBody extends GameEntity implements Animatable {
     private GameEntity parent;
     private Queue<Vec2d> history = new LinkedList<>();
     private static final int historySize = 10;
+    //public static int id;
 
     public SnakeBody(Pane pane, GameEntity parent) {
         super(pane);
@@ -30,6 +32,7 @@ public class SnakeBody extends GameEntity implements Animatable {
         double yc = parent.getY();
         setX(xc);
         setY(yc);
+        //id++;
         for (int i = 0; i < historySize; i++) {
             history.add(new Vec2d(xc, yc));
         }
@@ -43,3 +46,4 @@ public class SnakeBody extends GameEntity implements Animatable {
     }
 
 }
+

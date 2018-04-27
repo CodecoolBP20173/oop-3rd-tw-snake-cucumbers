@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-// class for holding all static stuff
 public class Globals {
 
     public static final double WINDOW_WIDTH = 1000;
@@ -18,7 +17,7 @@ public class Globals {
     public static Image snakeBody = new Image("snake_body.png");
     public static Image simpleEnemy = new Image("simple_enemy.png");
     public static Image powerupBerry = new Image("powerup_berry.png");
-    //.. put here the other images you want to use
+    public static Game game = new Game();
 
     public static boolean leftKeyDown;
     public static boolean rightKeyDown;
@@ -37,11 +36,10 @@ public class Globals {
         newGameObjects.add(toAdd);
     }
 
-    public static void removeGameObject(GameEntity toRemove) {
-        oldGameObjects.add(toRemove);
-    }
-
     public static List<GameEntity> getGameObjects() {
         return Collections.unmodifiableList(gameObjects);
     }
+
+
+
 }

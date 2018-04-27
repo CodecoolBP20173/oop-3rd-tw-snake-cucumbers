@@ -11,31 +11,38 @@ import javafx.scene.layout.Pane;
 
 import java.util.Random;
 
-// a simple enemy TODO make better ones.
 public class SimpleEnemy extends GameEntity implements Animatable, Interactable {
 
     private Point2D heading;
-    private static final int damage = 10;
+    private static final int DAMAGE = 10;
+    private int speed = 1;
+    private boolean isSpawning;
+
 
     public SimpleEnemy(Pane pane) {
         super(pane);
-
         setImage(Globals.simpleEnemy);
         pane.getChildren().add(this);
-        int speed = 1;
-        Random rnd = new Random();
-        setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
-        setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
+        isSpawning = true;
+        randomPositionAndDirection(getRandom().nextDouble() * Globals.WINDOW_WIDTH,
+                getRandom().nextDouble() * Globals.WINDOW_HEIGHT);
+    }
 
-        double direction = rnd.nextDouble() * 360;
+    private void randomPositionAndDirection(double positionX, double positionY) {
+        setX(positionX);
+        setY(positionY);
+
+        double direction = getRandom().nextDouble() * 360;
         setRotate(direction);
         heading = Utils.directionToVector(direction, speed);
-    }
+        }
 
     @Override
     public void step() {
+        isSpawning = false;
         if (isOutOfBounds()) {
-            destroy();
+            randomPositionAndDirection(getX() - heading.getX(),
+                    getY() - heading.getY());
         }
         setX(getX() + heading.getX());
         setY(getY() + heading.getY());
@@ -43,12 +50,15 @@ public class SimpleEnemy extends GameEntity implements Animatable, Interactable 
 
     @Override
     public void apply(SnakeHead player) {
-        player.changeHealth(-damage);
-        destroy();
+        if (!isSpawning) {
+            player.changeHealth(-DAMAGE);
+        }
+        randomPositionAndDirection(getRandom().nextDouble() * Globals.WINDOW_WIDTH,
+                getRandom().nextDouble() * Globals.WINDOW_HEIGHT);
     }
 
-    @Override
-    public String getMessage() {
-        return "10 damage";
+    private Random getRandom() {
+        return new Random();
     }
+
 }

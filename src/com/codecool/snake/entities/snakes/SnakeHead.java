@@ -1,11 +1,12 @@
 package com.codecool.snake.entities.snakes;
 
+import com.codecool.snake.*;
 import com.codecool.snake.entities.GameEntity;
-import com.codecool.snake.Globals;
 import com.codecool.snake.entities.Animatable;
-import com.codecool.snake.Utils;
 import com.codecool.snake.entities.Interactable;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.layout.Pane;
 
 public class SnakeHead extends GameEntity implements Animatable {
@@ -13,16 +14,25 @@ public class SnakeHead extends GameEntity implements Animatable {
     private static final float speed = 2;
     private static final float turnRate = 2;
     private GameEntity tail; // the last element. Needed to know where to add the next part.
-    private int health;
+    public static int health;
+    public static int score = 0;
+    Text healthText = new Text();
 
     public SnakeHead(Pane pane, int xc, int yc) {
         super(pane);
         setX(xc);
         setY(yc);
-        health = 100;
+        health = 50;
         tail = this;
+        healthText.setLayoutX(900);
+        healthText.setLayoutY(15);
+        healthText.setVisible(true);
+        healthText.setText("Health: "+ Integer.toString(health*2) + '%');
+        healthText.setFill(Color.BLACK);
+
         setImage(Globals.snakeHead);
         pane.getChildren().add(this);
+        pane.getChildren().add(healthText);
 
         addPart(4);
     }
@@ -47,15 +57,13 @@ public class SnakeHead extends GameEntity implements Animatable {
                 if (entity instanceof Interactable) {
                     Interactable interactable = (Interactable) entity;
                     interactable.apply(this);
-                    System.out.println(interactable.getMessage());
                 }
             }
         }
 
         // check for game over condition
         if (isOutOfBounds() || health <= 0) {
-            System.out.println("Game Over");
-            Globals.gameLoop.stop();
+            GameOver.GameOver();
         }
     }
 
@@ -63,10 +71,16 @@ public class SnakeHead extends GameEntity implements Animatable {
         for (int i = 0; i < numParts; i++) {
             SnakeBody newPart = new SnakeBody(pane, tail);
             tail = newPart;
+            score += 1;
         }
+    }
+
+    public void setTextHealth(int health) {
+        this.healthText.setText("Health: " + String.valueOf(health*2) + '%');
     }
 
     public void changeHealth(int diff) {
         health += diff;
+        setTextHealth(health);
     }
 }
