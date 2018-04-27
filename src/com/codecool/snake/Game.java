@@ -1,6 +1,5 @@
 package com.codecool.snake;
 
-import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerup;
 import com.codecool.snake.entities.snakes.SnakeHead;
@@ -9,34 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
-import javax.swing.*;
-import java.awt.*;
 import java.util.LinkedList;
 
 public class Game extends Pane {
 
-    public Game() {
-        /*new SnakeHead(this, 500, 500);
 
-        new SimpleEnemy(this);
-        new SimpleEnemy(this);
-        new SimpleEnemy(this);
-        new SimpleEnemy(this);
-
-        new SimplePowerup(this);
-        new SimplePowerup(this);
-        new SimplePowerup(this);
-        new SimplePowerup(this);*/
-
-
-    }
-
-    public void deleteIfRestart() {
-        for (GameEntity entity : Globals.getGameObjects()){
-            entity.destroy();
-        }
-    }
+    private static final int NUMBER_OF_ENEMIES_AND_POWERUPS = 4;
 
     public void start() {
 
@@ -60,40 +37,32 @@ public class Game extends Pane {
         Globals.gameLoop.start();
     }
 
-    public void initButtons() {
+    private void initButtons() {
         Button restartBtn = new Button("Restart");
         restartBtn.setLayoutY(0);
         restartBtn.setLayoutX(0);
         restartBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                System.out.println("Restart button pressed");
                 reset();
                 initializeGame();
                 Globals.gameLoop.start();
-
             }
         });
         getChildren().add(restartBtn);
     }
-    public void initializeGame() {
+    private void initializeGame() {
         new SnakeHead(this, 500, 500);
 
-        new SimpleEnemy(this);
-        new SimpleEnemy(this);
-        new SimpleEnemy(this);
-        new SimpleEnemy(this);
-
-
-        new SimplePowerup(this);
-        new SimplePowerup(this);
-        new SimplePowerup(this);
-        new SimplePowerup(this);
+        for (int i = 1; i <= NUMBER_OF_ENEMIES_AND_POWERUPS; i++) {
+            new SimpleEnemy(this);
+            new SimplePowerup(this);
+        }
 
         Globals.game = this;
         initButtons();
 
     }
-    public static void reset(){
+    private static void reset(){
         Globals.gameLoop.stop();
         Globals.game.getChildren().clear();
         Globals.gameObjects = new LinkedList<>();
