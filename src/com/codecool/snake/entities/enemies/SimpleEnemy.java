@@ -24,8 +24,8 @@ public class SimpleEnemy extends GameEntity implements Animatable, Interactable 
         setImage(Globals.simpleEnemy);
         pane.getChildren().add(this);
         isSpawning = true;
-        randomPositionAndDirection(getRandom().nextDouble() * Globals.WINDOW_WIDTH,
-                getRandom().nextDouble() * Globals.WINDOW_HEIGHT);
+        randomPositionAndDirection(getRandom().nextDouble() * (Globals.WINDOW_WIDTH - 30),
+                getRandom().nextDouble() * (Globals.WINDOW_HEIGHT - 30));
     }
 
     private void randomPositionAndDirection(double positionX, double positionY) {
@@ -53,8 +53,8 @@ public class SimpleEnemy extends GameEntity implements Animatable, Interactable 
         if (!isSpawning) {
             player.changeHealth(-DAMAGE);
         }
-        randomPositionAndDirection(getRandom().nextDouble() * Globals.WINDOW_WIDTH,
-                getRandom().nextDouble() * Globals.WINDOW_HEIGHT);
+        randomPositionAndDirection(getRandom().nextDouble() * (Globals.WINDOW_WIDTH - 30),
+                getRandom().nextDouble() * (Globals.WINDOW_HEIGHT - 30));
     }
 
     private Random getRandom() {

@@ -18,8 +18,8 @@ public class SimplePowerup extends GameEntity implements Interactable {
 
     private void setToRandomPosition() {
         Random rnd = new Random();
-        setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
-        setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
+        setX(rnd.nextDouble() * (Globals.WINDOW_WIDTH - 30));
+        setY(rnd.nextDouble() * (Globals.WINDOW_HEIGHT - 30));
     }
 
     @Override
